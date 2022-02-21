@@ -1,4 +1,5 @@
 <div class="container">
+  <%= render "layouts/error_message", message: @book %>
   <div class='row'>
       <div class='col-md-3'>
         <%= render "users/userinfo", user: current_user %>
