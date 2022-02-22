@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-
+  before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update]
 
   def index
     @users=User.all
@@ -36,5 +37,11 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :profile_image, :introduction)
   end
 
+  def ensure_correct_user
+    user = User.find(params[:id])
+    if !(current_user.id == user.id)
+      redirect_to user_path(current_user.id)
+    end
+  end
 
 end
