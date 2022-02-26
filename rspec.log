@@ -1,0 +1,208 @@
+
+BookCommentモデルのテスト
+  バリデーションのテスト
+    commentカラム
+[31m      空欄でないこと (FAILED - 1)[0m
+  アソシエーションのテスト
+    Bookモデルとの関係
+[31m      N:1となっている (FAILED - 2)[0m
+    Userモデルとの関係
+[31m      N:1となっている (FAILED - 3)[0m
+
+Bookモデルのテスト
+  バリデーションのテスト
+    titleカラム
+[32m      空欄でないこと[0m
+    bodyカラム
+[32m      空欄でないこと[0m
+[32m      200文字以下であること: 200文字は〇[0m
+[32m      200文字以下であること: 201文字は×[0m
+  アソシエーションのテスト
+    Userモデルとの関係
+[32m      N:1となっている[0m
+    BookCommentモデルとの関係
+[31m      1:Nとなっている (FAILED - 4)[0m
+    Favoriteモデルとの関係
+[32m      1:Nとなっている[0m
+
+Favoriteモデルのテスト
+  バリデーションのテスト
+[31m    ユーザーは一つの投稿に一つしかいいねできない (FAILED - 5)[0m
+  アソシエーションのテスト
+    Bookモデルとの関係
+[32m      N:1となっている[0m
+    Userモデルとの関係
+[32m      N:1となっている[0m
+
+Userモデルのテスト
+  バリデーションのテスト
+    nameカラム
+[32m      空欄でないこと[0m
+[32m      2文字以上であること: 1文字は×[0m
+[32m      2文字以上であること: 2文字は〇[0m
+[32m      20文字以下であること: 20文字は〇[0m
+[32m      20文字以下であること: 21文字は×[0m
+[32m      一意性があること[0m
+    introductionカラム
+[32m      50文字以下であること: 50文字は〇[0m
+[32m      50文字以下であること: 51文字は×[0m
+  アソシエーションのテスト
+    Bookモデルとの関係
+[32m      1:Nとなっている[0m
+    BookCommentモデルとの関係
+[31m      1:Nとなっている (FAILED - 6)[0m
+    Favoriteモデルとの関係
+[31m      1:Nとなっている (FAILED - 7)[0m
+
+[STEP1] ユーザログイン前のテスト
+  トップ画面のテスト
+    表示内容の確認
+[31m      URLが正しい (FAILED - 8)[0m
+
+Failures:
+
+  1) BookCommentモデルのテスト バリデーションのテスト commentカラム 空欄でないこと
+     [31mFailure/Error: let!(:book_comment) { build(:book_comment, book: book, user: user) }[0m
+     [31m[0m
+     [31mNameError:[0m
+     [31m  uninitialized constant BookComment[0m
+     [31m  Did you mean?  BooksController[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/factory_bot-6.2.0/lib/factory_bot/factory.rb:26:in `build_class'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/factory_bot-6.2.0/lib/factory_bot/factory.rb:87:in `compile'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/factory_bot-6.2.0/lib/factory_bot/factory_runner.rb:14:in `run'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/factory_bot-6.2.0/lib/factory_bot/strategy_syntax_method_registrar.rb:28:in `block in define_singular_strategy_method'[0m
+     [36m# ./spec/models/book_comment_spec.rb:9:in `block (3 levels) in <top (required)>'[0m
+
+  2) BookCommentモデルのテスト アソシエーションのテスト Bookモデルとの関係 N:1となっている
+     [31mFailure/Error: expect(BookComment.reflect_on_association(:book).macro).to eq :belongs_to[0m
+     [31m[0m
+     [31mNameError:[0m
+     [31m  uninitialized constant BookComment[0m
+     [31m  Did you mean?  BooksController[0m
+     [36m# ./spec/models/book_comment_spec.rb:22:in `block (4 levels) in <top (required)>'[0m
+
+  3) BookCommentモデルのテスト アソシエーションのテスト Userモデルとの関係 N:1となっている
+     [31mFailure/Error: expect(BookComment.reflect_on_association(:user).macro).to eq :belongs_to[0m
+     [31m[0m
+     [31mNameError:[0m
+     [31m  uninitialized constant BookComment[0m
+     [31m  Did you mean?  BooksController[0m
+     [36m# ./spec/models/book_comment_spec.rb:27:in `block (4 levels) in <top (required)>'[0m
+
+  4) Bookモデルのテスト アソシエーションのテスト BookCommentモデルとの関係 1:Nとなっている
+     [31mFailure/Error: expect(Book.reflect_on_association(:book_comments).macro).to eq :has_many[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `macro' for nil:NilClass[0m
+     [36m# ./spec/models/book_spec.rb:41:in `block (4 levels) in <main>'[0m
+
+  5) Favoriteモデルのテスト バリデーションのテスト ユーザーは一つの投稿に一つしかいいねできない
+     [31mFailure/Error: is_expected.to eq false[0m
+     [31m[0m
+     [31m  expected: false[0m
+     [31m       got: true[0m
+     [31m[0m
+     [31m  (compared using ==)[0m
+     [31m[0m
+     [31m  Diff:[0m[0m
+     [31m  [0m[34m@@ -1 +1 @@[0m
+     [31m  [0m[31m-false[0m
+     [31m  [0m[32m+true[0m
+     [31m  [0m[0m
+     [36m# ./spec/models/favorite_spec.rb:13:in `block (3 levels) in <main>'[0m
+
+  6) Userモデルのテスト アソシエーションのテスト BookCommentモデルとの関係 1:Nとなっている
+     [31mFailure/Error: expect(User.reflect_on_association(:book_comments).macro).to eq :has_many[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `macro' for nil:NilClass[0m
+     [36m# ./spec/models/user_spec.rb:57:in `block (4 levels) in <main>'[0m
+
+  7) Userモデルのテスト アソシエーションのテスト Favoriteモデルとの関係 1:Nとなっている
+     [31mFailure/Error: expect(User.reflect_on_association(:favorites).macro).to eq :has_many[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `macro' for nil:NilClass[0m
+     [36m# ./spec/models/user_spec.rb:62:in `block (4 levels) in <main>'[0m
+
+  8) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 URLが正しい
+     [31mFailure/Error: <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>[0m
+     [31m[0m
+     [31mActionView::Template::Error:[0m
+     [31m  Webpacker can't find application.js in /home/ec2-user/environment/bookers2_ver.2/public/packs-test/manifest.json. Possible causes:[0m
+     [31m  1. You want to set webpacker.yml value of compile to true for your environment[0m
+     [31m     unless you are using the `webpack -w` or the webpack-dev-server.[0m
+     [31m  2. webpack has not yet re-run to reflect updates.[0m
+     [31m  3. You have misconfigured Webpacker's config/webpacker.yml file.[0m
+     [31m  4. Your webpack configuration is not creating a manifest.[0m
+     [31m  Your manifest contains:[0m
+     [31m  {[0m
+     [31m  }[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/manifest.rb:79:in `handle_missing_entry'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/manifest.rb:49:in `lookup!'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/helper.rb:182:in `block in sources_from_manifest_entries'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/helper.rb:182:in `map'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/helper.rb:182:in `sources_from_manifest_entries'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/helper.rb:81:in `javascript_pack_tag'[0m
+     [36m# ./app/views/layouts/application.html.erb:9:in `_app_views_layouts_application_html_erb__3053834375784001351_91604300'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/actiontext-6.1.4.6/lib/action_text/rendering.rb:20:in `with_renderer'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/actiontext-6.1.4.6/lib/action_text/engine.rb:59:in `block (4 levels) in <class:Engine>'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/warden-1.2.9/lib/warden/manager.rb:36:in `block in call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/warden-1.2.9/lib/warden/manager.rb:34:in `catch'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/warden-1.2.9/lib/warden/manager.rb:34:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/tempfile_reaper.rb:15:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/etag.rb:27:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/conditional_get.rb:27:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/head.rb:12:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/session/abstract/id.rb:266:in `context'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/session/abstract/id.rb:260:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/railties-6.1.4.6/lib/rails/rack/logger.rb:37:in `call_app'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/railties-6.1.4.6/lib/rails/rack/logger.rb:26:in `block in call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/railties-6.1.4.6/lib/rails/rack/logger.rb:26:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/method_override.rb:24:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/runtime.rb:22:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/sendfile.rb:110:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/railties-6.1.4.6/lib/rails/engine.rb:539:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/urlmap.rb:74:in `block in call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/urlmap.rb:58:in `each'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/urlmap.rb:58:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-2.2.3/lib/rack/builder.rb:244:in `call'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-test-1.1.0/lib/rack/mock_session.rb:29:in `request'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-test-1.1.0/lib/rack/test.rb:266:in `process_request'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-test-1.1.0/lib/rack/test.rb:129:in `custom_request'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/rack-test-1.1.0/lib/rack/test.rb:58:in `get'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.36.0/lib/capybara/rack_test/browser.rb:72:in `process'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.36.0/lib/capybara/rack_test/browser.rb:47:in `process_and_follow_redirects'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.36.0/lib/capybara/rack_test/browser.rb:24:in `visit'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.36.0/lib/capybara/rack_test/driver.rb:46:in `visit'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.36.0/lib/capybara/session.rb:278:in `visit'[0m
+     [36m# /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/capybara-3.36.0/lib/capybara/dsl.rb:58:in `block (2 levels) in <module:DSL>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'[0m
+     [36m# ------------------[0m
+     [36m# --- Caused by: ---[0m
+     [36m# Webpacker::Manifest::MissingEntryError:[0m
+     [36m#   Webpacker can't find application.js in /home/ec2-user/environment/bookers2_ver.2/public/packs-test/manifest.json. Possible causes:[0m
+     [36m#   1. You want to set webpacker.yml value of compile to true for your environment[0m
+     [36m#      unless you are using the `webpack -w` or the webpack-dev-server.[0m
+     [36m#   2. webpack has not yet re-run to reflect updates.[0m
+     [36m#   3. You have misconfigured Webpacker's config/webpacker.yml file.[0m
+     [36m#   4. Your webpack configuration is not creating a manifest.[0m
+     [36m#   Your manifest contains:[0m
+     [36m#   {[0m
+     [36m#   }[0m
+     [36m#   /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/webpacker-5.4.3/lib/webpacker/manifest.rb:79:in `handle_missing_entry'[0m
+
+Finished in 5.98 seconds (files took 3.74 seconds to load)
+[31m25 examples, 8 failures[0m
+
+Failed examples:
+
+[31mrspec ./spec/models/book_comment_spec.rb:12[0m [36m# BookCommentモデルのテスト バリデーションのテスト commentカラム 空欄でないこと[0m
+[31mrspec ./spec/models/book_comment_spec.rb:21[0m [36m# BookCommentモデルのテスト アソシエーションのテスト Bookモデルとの関係 N:1となっている[0m
+[31mrspec ./spec/models/book_comment_spec.rb:26[0m [36m# BookCommentモデルのテスト アソシエーションのテスト Userモデルとの関係 N:1となっている[0m
+[31mrspec ./spec/models/book_spec.rb:40[0m [36m# Bookモデルのテスト アソシエーションのテスト BookCommentモデルとの関係 1:Nとなっている[0m
+[31mrspec ./spec/models/favorite_spec.rb:12[0m [36m# Favoriteモデルのテスト バリデーションのテスト ユーザーは一つの投稿に一つしかいいねできない[0m
+[31mrspec ./spec/models/user_spec.rb:56[0m [36m# Userモデルのテスト アソシエーションのテスト BookCommentモデルとの関係 1:Nとなっている[0m
+[31mrspec ./spec/models/user_spec.rb:61[0m [36m# Userモデルのテスト アソシエーションのテスト Favoriteモデルとの関係 1:Nとなっている[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:10[0m [36m# [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 URLが正しい[0m
+

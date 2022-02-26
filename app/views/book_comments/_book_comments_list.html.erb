@@ -1,0 +1,30 @@
+<table class="table">
+  <% book_comments.each do |book_comment| %>
+    <tr>
+      <% if book.id == book_comment.book_id %>
+        <td>
+          <%= link_to user_path(book_comment.user_id) do %>
+            <% if book.user.profile_image.attached? %>
+              <%= image_tag book.user.profile_image, size: "40x40" %>
+            <% else %>
+              <%= image_tag 'no_image', size: "40x40" %>
+            <% end %>
+
+            <%= book_comment.user.name %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= book_comment.comment %>
+        </td>
+
+        <td>
+          <% if book_comment.user_id == current_user.id %>
+            <%= link_to "Destroy", book_book_comment_path(book.id, book_comment.id), method: :delete, class: "btn-sm btn-danger" %>
+          <% end %>
+        </td>
+
+      <% end %>
+    </tr>
+  <% end %>
+</table>
